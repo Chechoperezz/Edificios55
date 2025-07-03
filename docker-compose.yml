@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5001:5000"
+    volumes:
+      - .:/app
+    environment:
+
+      SQLALCHEMY_DATABASE_URI: 'mysql+pymysql://root:1055@db:3306/db_edificios'
+      SECRET_KEY: 'super_secret_key_change_me'
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1055
+      MYSQL_DATABASE: db_edificios
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
